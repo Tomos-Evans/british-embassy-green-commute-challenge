@@ -75,7 +75,7 @@ function LeaderboardRow({
             <span className="text-gray-400 font-normal">#{entry.discriminator}</span>
           </span>
           {entry.warrior_commute_count > 0 && (
-            <span className="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-full bg-red-100 text-red-600">
+            <span className="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-600">
               ☔ Warrior
             </span>
           )}
@@ -139,13 +139,13 @@ export function LeaderboardPage() {
       {/* Main content */}
       <div className="max-w-3xl mx-auto px-4 py-8">
         <div className="flex items-baseline justify-between mb-6">
-          <h1 className="text-3xl font-bold text-[#1a2b5e] relative inline-block">
-            Leaderboard
-            <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-[#c8102e]" />
+          <h1 className="text-3xl font-bold text-[#1a2b5e]">
+            🏆{' '}
+            <span className="relative inline-block">
+              Leaderboard
+              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-[#c8102e]" />
+            </span>
           </h1>
-          <span className="text-xs font-semibold tracking-widest text-gray-400 uppercase">
-            Updated live
-          </span>
         </div>
 
         {loading && (

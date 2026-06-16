@@ -51,7 +51,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               🏆 <span>Leaderboard</span>
             </NavLink>
             <NavLink to="/log" className={navLinkClass}>
-              ➕ <span>Log</span>
+              <span className="text-[#f5f0e8] font-bold">+</span> <span>Add a journey</span>
             </NavLink>
           </nav>
 

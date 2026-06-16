@@ -129,7 +129,7 @@ export function LogJourneyPage() {
       <div className="flex items-baseline justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold text-[#1a2b5e] relative inline-block">
-            Log a Journey
+            Add a Journey
             <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-[#c8102e]" />
           </h1>
         </div>
