@@ -3,6 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 import { daysRemaining } from '../lib/waves'
+import { Footer } from './Footer'
 import type { Wave } from '../types/database'
 
 function initials(name: string): string {
@@ -79,6 +80,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Page content */}
       <main className="flex-1">{children}</main>
+
+      <Footer />
 
       {/* Floating action button — add a journey */}
       {profile && location.pathname !== '/log' && (

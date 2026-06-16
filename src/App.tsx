@@ -8,6 +8,8 @@ import { LoginPage } from './pages/LoginPage'
 import { SignupPage } from './pages/SignupPage'
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage'
 import { ResetPasswordPage } from './pages/ResetPasswordPage'
+import { TermsPage } from './pages/TermsPage'
+import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage'
 import { LeaderboardPage } from './pages/LeaderboardPage'
 import { LogJourneyPage } from './pages/LogJourneyPage'
 import { ProfilePage } from './pages/ProfilePage'
@@ -45,6 +47,10 @@ export default function App() {
           />
           {/* Not PublicOnlyRoute — Supabase signs the user in during recovery */}
           <Route path="/reset-password" element={<ResetPasswordPage />} />
+
+          {/* Accessible to everyone, logged in or not */}
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/privacy" element={<PrivacyPolicyPage />} />
 
           {/* Protected */}
           <Route

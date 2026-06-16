@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
+import { Footer } from '../components/Footer'
 import type { TransportMode } from '../types/database'
 
 export function SignupPage() {
@@ -105,6 +106,8 @@ export function SignupPage() {
             </p>
           </div>
         </div>
+
+        <Footer />
       </div>
     )
   }
@@ -220,6 +223,8 @@ export function SignupPage() {
           </p>
         </div>
       </div>
+
+      <Footer />
     </div>
   )
 }

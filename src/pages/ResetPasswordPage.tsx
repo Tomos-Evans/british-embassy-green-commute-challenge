@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
+import { Footer } from '../components/Footer'
 
 export function ResetPasswordPage() {
   const [password, setPassword] = useState('')
@@ -53,6 +54,8 @@ export function ResetPasswordPage() {
             </Link>
           </div>
         </div>
+
+        <Footer />
       </div>
     )
   }
@@ -76,6 +79,8 @@ export function ResetPasswordPage() {
             </button>
           </div>
         </div>
+
+        <Footer />
       </div>
     )
   }
@@ -149,6 +154,8 @@ export function ResetPasswordPage() {
           </form>
         </div>
       </div>
+
+      <Footer />
     </div>
   )
 }

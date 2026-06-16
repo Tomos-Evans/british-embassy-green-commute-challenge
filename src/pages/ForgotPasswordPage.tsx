@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { Footer } from '../components/Footer'
 
 export function ForgotPasswordPage() {
   const [email, setEmail] = useState('')
@@ -49,6 +50,8 @@ export function ForgotPasswordPage() {
             </Link>
           </div>
         </div>
+
+        <Footer />
       </div>
     )
   }
@@ -111,6 +114,8 @@ export function ForgotPasswordPage() {
           </p>
         </div>
       </div>
+
+      <Footer />
     </div>
   )
 }
