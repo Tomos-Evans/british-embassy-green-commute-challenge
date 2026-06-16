@@ -72,6 +72,19 @@ function getModeBreakdown(commutes: CommuteWithMode[]): ModeBreakdown[] {
   return Array.from(map.values()).sort((a, b) => b.miles - a.miles)
 }
 
+function formatCommuteDate(isoDate: string): string {
+  // isoDate is a plain "YYYY-MM-DD" with no timezone. Parsing it directly
+  // with `new Date()` treats it as UTC midnight, which renders as the
+  // previous day in any timezone behind UTC — build it from local
+  // components instead.
+  const [year, month, day] = isoDate.split('-').map(Number)
+  return new Date(year, month - 1, day).toLocaleDateString('en-GB', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+  })
+}
+
 function initials(name: string): string {
   return name
     .split(' ')
@@ -160,6 +173,7 @@ export function ProfilePage() {
   const journeyCount = commutes.length
   const warriorCount = commutes.filter((c) => c.weather_warrior).length
   const breakdown = getModeBreakdown(commutes)
+  const recentCommutes = commutes.slice(0, 10)
 
   const badges = [
     { emoji: '🌱', name: 'First Step', unlocked: journeyCount >= 1 },
@@ -287,6 +301,49 @@ export function ProfilePage() {
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Recent journeys */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-base font-bold text-[#1a2b5e] mb-4 relative inline-block">
+          Recent Journeys
+          <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-[#c8102e]" />
+        </h2>
+
+        {recentCommutes.length === 0 ? (
+          <div className="text-center py-8 text-gray-400">
+            <div className="text-4xl mb-2">🚗</div>
+            <p className="text-sm">No journeys yet</p>
+          </div>
+        ) : (
+          <div className="divide-y divide-gray-100 mt-5">
+            {recentCommutes.map((c) => (
+              <div key={c.id} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
+                <span className="text-xl w-7 text-center">{c.transport_modes.emoji ?? '🚗'}</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-sm font-medium text-gray-700">
+                      {c.transport_modes.name}
+                      {c.weather_warrior && <span className="ml-1.5">☔</span>}
+                    </span>
+                    <span className="text-xs text-gray-400">
+                      {formatCommuteDate(c.commute_date)}
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-400 mt-0.5">
+                    {c.distance_miles.toFixed(1)} mi ·{' '}
+                    {calculatePoints(
+                      c.distance_miles,
+                      c.transport_modes.points_per_mile,
+                      c.weather_warrior,
+                    ).toFixed(1)}{' '}
+                    pts
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
