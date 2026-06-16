@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
 import { WEATHER_WARRIOR_MULTIPLIER } from '../lib/constants'
-import { daysRemaining } from '../lib/waves'
-import type { LeaderboardRow, RankedEntry, Wave } from '../types/database'
+import type { LeaderboardRow, RankedEntry } from '../types/database'
 
 function buildRanking(rows: LeaderboardRow[]): RankedEntry[] {
   const scored = rows.map((r) => ({
@@ -100,7 +99,6 @@ export function LeaderboardPage() {
   const [ranked, setRanked] = useState<RankedEntry[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [activeWave, setActiveWave] = useState<Wave | null>(null)
 
   const fetchLeaderboard = useCallback(async () => {
     const { data, error } = await supabase.rpc('get_leaderboard')
@@ -112,19 +110,9 @@ export function LeaderboardPage() {
     setLoading(false)
   }, [])
 
-  const fetchActiveWave = useCallback(async () => {
-    const { data } = await supabase
-      .from('waves')
-      .select('id, finish_date, is_active')
-      .eq('is_active', true)
-      .maybeSingle()
-    setActiveWave((data as Wave | null) ?? null)
-  }, [])
-
   useEffect(() => {
     fetchLeaderboard()
-    fetchActiveWave()
-  }, [fetchLeaderboard, fetchActiveWave])
+  }, [fetchLeaderboard])
 
   const top10 = ranked.slice(0, 10)
   const currentUserEntry = ranked.find((r) => r.user_id === user?.id)
@@ -146,12 +134,6 @@ export function LeaderboardPage() {
             <p className="text-2xl font-bold text-white">{totalMiles.toFixed(1)}</p>
             <p className="text-xs tracking-widest text-white/50 uppercase mt-0.5">Miles logged</p>
           </div>
-          {activeWave && (
-            <div className="border-l border-white/20 pl-8">
-              <p className="text-2xl font-bold text-white">{daysRemaining(activeWave.finish_date)}</p>
-              <p className="text-xs tracking-widest text-white/50 uppercase mt-0.5">Days remaining</p>
-            </div>
-          )}
         </div>
       </div>
 

@@ -1,5 +1,9 @@
+import { useState, useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { supabase } from '../lib/supabase'
+import { daysRemaining } from '../lib/waves'
+import type { Wave } from '../types/database'
 
 function initials(name: string): string {
   return name
@@ -13,6 +17,17 @@ function initials(name: string): string {
 export function Layout({ children }: { children: React.ReactNode }) {
   const { profile } = useAuth()
   const location = useLocation()
+  const [activeWave, setActiveWave] = useState<Wave | null>(null)
+
+  useEffect(() => {
+    if (!profile) return
+    supabase
+      .from('waves')
+      .select('id, finish_date, is_active')
+      .eq('is_active', true)
+      .maybeSingle()
+      .then(({ data }) => setActiveWave((data as Wave | null) ?? null))
+  }, [profile])
 
   return (
     <div className="min-h-screen bg-[#f5f0e8] flex flex-col">
@@ -29,6 +44,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </div>
             <div className="text-white leading-tight min-w-0">
               <div className="font-semibold text-sm truncate">Green Commute Challenge</div>
+              {activeWave && (
+                <div className="text-[11px] text-sky-200 truncate">
+                  🌊{' '}
+                  {(() => {
+                    const remaining = daysRemaining(activeWave.finish_date)
+                    if (remaining < 0) return 'Current wave has already ended'
+                    if (remaining === 0) return 'Current wave ends today'
+                    return `${remaining} day${remaining === 1 ? '' : 's'} left in current wave`
+                  })()}
+                </div>
+              )}
             </div>
           </NavLink>
 
