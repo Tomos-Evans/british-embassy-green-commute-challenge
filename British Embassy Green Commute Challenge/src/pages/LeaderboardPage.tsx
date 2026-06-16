@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
 import { WEATHER_WARRIOR_MULTIPLIER } from '../lib/constants'
@@ -146,6 +147,27 @@ export function LeaderboardPage() {
               <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-[#c8102e]" />
             </span>
           </h1>
+          <Link
+            to="/share"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold text-[#1a2b5e] border border-[#1a2b5e]/20 rounded-lg hover:bg-[#1a2b5e]/5 transition-colors shrink-0"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-4 h-4"
+            >
+              <circle cx="18" cy="5" r="3" />
+              <circle cx="6" cy="12" r="3" />
+              <circle cx="18" cy="19" r="3" />
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+            </svg>
+            <span>Share</span>
+          </Link>
         </div>
 
         {loading && (

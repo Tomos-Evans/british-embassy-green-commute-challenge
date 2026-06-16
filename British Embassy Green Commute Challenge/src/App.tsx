@@ -8,6 +8,7 @@ import { SignupPage } from './pages/SignupPage'
 import { LeaderboardPage } from './pages/LeaderboardPage'
 import { LogJourneyPage } from './pages/LogJourneyPage'
 import { ProfilePage } from './pages/ProfilePage'
+import { SharePage } from './pages/SharePage'
 
 export default function App() {
   return (
@@ -45,6 +46,16 @@ export default function App() {
               <ProtectedRoute>
                 <Layout>
                   <ProfilePage />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/share"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <SharePage />
                 </Layout>
               </ProtectedRoute>
             }
