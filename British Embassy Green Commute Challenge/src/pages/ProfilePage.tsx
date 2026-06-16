@@ -175,7 +175,7 @@ export function ProfilePage() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
       {/* Profile header */}
-      <div className="relative bg-[#1a2b5e] rounded-2xl overflow-hidden p-7 flex items-center gap-6">
+      <div className="relative bg-[#1a2b5e] rounded-2xl overflow-hidden p-5 sm:p-7 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-center sm:text-left">
         {/* Decorative circle */}
         <div className="absolute right-0 top-0 w-56 h-56 rounded-full border-[40px] border-white/5 translate-x-16 -translate-y-16 pointer-events-none" />
 
@@ -186,11 +186,11 @@ export function ProfilePage() {
 
         {/* Info */}
         <div className="flex-1 min-w-0">
-          <h1 className="text-2xl font-bold text-white">
+          <h1 className="text-2xl font-bold text-white break-words">
             {profile?.display_name}
             <span className="text-white/50 font-normal text-lg">#{profile?.discriminator}</span>
           </h1>
-          <div className="flex items-center gap-3 mt-1 text-white/60 text-sm">
+          <div className="flex items-center justify-center sm:justify-start gap-3 mt-1 text-white/60 text-sm flex-wrap">
             <span>
               Rank{' '}
               <span className="text-white font-semibold">
@@ -205,16 +205,16 @@ export function ProfilePage() {
         </div>
 
         {/* Actions */}
-        <div className="flex gap-2 shrink-0">
+        <div className="flex gap-2 shrink-0 w-full sm:w-auto">
           <button
             onClick={() => navigate('/log')}
-            className="px-4 py-2 text-sm font-semibold text-white border border-white/30 rounded-lg hover:bg-white/10 transition-colors"
+            className="flex-1 sm:flex-initial px-4 py-2 text-sm font-semibold text-white border border-white/30 rounded-lg hover:bg-white/10 transition-colors whitespace-nowrap"
           >
             + Log Journey
           </button>
           <button
             onClick={handleSignOut}
-            className="px-4 py-2 text-sm font-semibold text-white border border-white/30 rounded-lg hover:bg-white/10 transition-colors"
+            className="flex-1 sm:flex-initial px-4 py-2 text-sm font-semibold text-white border border-white/30 rounded-lg hover:bg-white/10 transition-colors whitespace-nowrap"
           >
             Sign Out
           </button>
