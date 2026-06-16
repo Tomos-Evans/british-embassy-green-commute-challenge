@@ -29,13 +29,10 @@ export function LoginPage() {
     <div className="min-h-screen bg-[#f5f0e8] flex flex-col items-center justify-center p-4">
       {/* Branding */}
       <div className="text-center mb-8">
-        <div className="w-16 h-16 rounded-full bg-[#1a2b5e] flex items-center justify-center text-white font-bold text-lg mx-auto mb-3">
-          BE
+        <div className="w-16 h-16 rounded-full bg-[#1a2b5e] flex items-center justify-center text-white text-2xl mx-auto mb-3">
+          🏆
         </div>
-        <h1 className="text-2xl font-bold text-[#1a2b5e]">British Embassy</h1>
-        <p className="text-xs tracking-widest text-gray-500 uppercase mt-0.5">
-          Green Commute Challenge
-        </p>
+        <h1 className="text-2xl font-bold text-[#1a2b5e]">Green Commute Challenge</h1>
       </div>
 
       {/* Card */}

@@ -1,4 +1,4 @@
-# British Embassy Washington Green Commute Challenge
+# Green Commute Challenge
 
 This will be a proof of concept build of a green commute tracking website for use at my work. Its goal is to encourage eco friendly choices for transport. 
 

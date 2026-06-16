@@ -4,5 +4,5 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: '/british-embassy-green-commute-challenge/',
+  base: '/green-commute-challenge/',
 })

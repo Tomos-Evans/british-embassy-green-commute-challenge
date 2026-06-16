@@ -28,10 +28,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               🏆
             </div>
             <div className="text-white leading-tight min-w-0">
-              <div className="font-semibold text-sm truncate">British Embassy</div>
-              <div className="text-[10px] tracking-widest text-white/70 uppercase truncate">
-                Green Commute Challenge
-              </div>
+              <div className="font-semibold text-sm truncate">Green Commute Challenge</div>
             </div>
           </NavLink>
 
