@@ -34,11 +34,15 @@ function computeStreak(commutes: CommuteWithMode[]): number {
   const dates = new Set(commutes.map((c) => c.commute_date))
   let streak = 0
 
-  // Walk backwards from today
+  // Walk backwards from today, skipping weekends — they don't count towards
+  // or break the streak, since commuting only happens on workdays.
   const today = new Date()
   for (let i = 0; i < 365; i++) {
     const d = new Date(today)
     d.setDate(d.getDate() - i)
+    const dayOfWeek = d.getDay()
+    if (dayOfWeek === 0 || dayOfWeek === 6) continue
+
     const dateStr = d.toISOString().split('T')[0]
     if (dates.has(dateStr)) {
       streak++
