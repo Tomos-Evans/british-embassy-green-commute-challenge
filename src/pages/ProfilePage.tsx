@@ -121,6 +121,9 @@ export function ProfilePage() {
   const [commutes, setCommutes] = useState<CommuteWithMode[]>([])
   const [rank, setRank] = useState<number | null>(null)
   const [loading, setLoading] = useState(true)
+  const [confirmDelete, setConfirmDelete] = useState(false)
+  const [deleting, setDeleting] = useState(false)
+  const [deleteError, setDeleteError] = useState<string | null>(null)
 
   useEffect(() => {
     if (!user) return
@@ -186,6 +189,19 @@ export function ProfilePage() {
   ]
 
   async function handleSignOut() {
+    await supabase.auth.signOut()
+    navigate('/login')
+  }
+
+  async function handleDeleteAccount() {
+    setDeleting(true)
+    setDeleteError(null)
+    const { error } = await supabase.rpc('delete_own_account')
+    if (error) {
+      setDeleteError(error.message)
+      setDeleting(false)
+      return
+    }
     await supabase.auth.signOut()
     navigate('/login')
   }
@@ -342,6 +358,53 @@ export function ProfilePage() {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+      </div>
+
+      {/* Danger zone */}
+      <div className="pb-4">
+        {!confirmDelete ? (
+          <div className="border border-red-200 rounded-xl p-4 flex items-center justify-between gap-4">
+            <div>
+              <p className="text-sm font-medium text-gray-700">Delete account</p>
+              <p className="text-xs text-gray-400 mt-0.5">Permanently removes your account and all journey data.</p>
+            </div>
+            <button
+              onClick={() => setConfirmDelete(true)}
+              className="shrink-0 text-xs font-semibold text-red-600 border border-red-300 hover:bg-red-50 px-3 py-1.5 rounded-lg transition-colors"
+            >
+              Delete my account
+            </button>
+          </div>
+        ) : (
+          <div className="bg-white border border-red-200 rounded-xl p-5 max-w-sm mx-auto text-left">
+            <p className="text-sm font-semibold text-gray-800 mb-1">Delete your account?</p>
+            <p className="text-xs text-gray-500 mb-4">
+              This will permanently delete all your journeys and remove your account. This cannot
+              be undone.
+            </p>
+            {deleteError && (
+              <p className="text-red-600 text-xs bg-red-50 border border-red-200 rounded-lg px-3 py-2 mb-3">
+                {deleteError}
+              </p>
+            )}
+            <div className="flex gap-2">
+              <button
+                onClick={handleDeleteAccount}
+                disabled={deleting}
+                className="flex-1 bg-red-600 hover:bg-red-700 disabled:opacity-60 text-white text-xs font-semibold py-2 rounded-lg transition-colors"
+              >
+                {deleting ? 'Deleting…' : 'Yes, delete everything'}
+              </button>
+              <button
+                onClick={() => { setConfirmDelete(false); setDeleteError(null) }}
+                disabled={deleting}
+                className="flex-1 border border-gray-200 hover:bg-gray-50 text-gray-600 text-xs font-semibold py-2 rounded-lg transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         )}
       </div>

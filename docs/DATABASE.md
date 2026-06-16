@@ -270,7 +270,37 @@ grant execute on function public.get_next_discriminator(text) to authenticated;
 
 ---
 
-## 8. Environment variables
+## 8. RPC: `delete_own_account`
+
+Deletes all of a user's commutes, their profile, and their auth account in
+one call. The function runs as `SECURITY DEFINER` so it can delete from
+`auth.users`, which the client-side anon key cannot touch directly. It
+always operates on `auth.uid()`, so a user can only ever delete themselves.
+
+```sql
+create or replace function public.delete_own_account()
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  delete from public.commutes where user_id = auth.uid();
+  delete from public.profiles  where id      = auth.uid();
+  delete from auth.users       where id      = auth.uid();
+end;
+$$;
+
+grant execute on function public.delete_own_account() to authenticated;
+```
+
+The profile and commutes rows would also be removed by their `on delete cascade`
+constraints when the `auth.users` row is deleted, but deleting them explicitly
+first is safer and avoids relying on deletion order.
+
+---
+
+## 9. Environment variables
 
 Copy `.env.example` to `.env` and fill in your values:
 
@@ -283,7 +313,7 @@ Find these in your Supabase project under **Settings → API**.
 
 ---
 
-## 9. Auth settings (Supabase Dashboard)
+## 10. Auth settings (Supabase Dashboard)
 
 - **Authentication → Providers → Email**: ensure Email provider is enabled.
 - Optionally disable "Confirm email" for local development so you can sign up immediately without checking email.
