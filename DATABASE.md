@@ -216,12 +216,15 @@ Find these in your Supabase project under **Settings → API**.
 
 ---
 
-## GitHub Pages deployment note
+## GitHub Pages deployment
 
-When deploying to GitHub Pages, update `vite.config.ts` to set the `base` to your repo name:
+The repo includes `.github/workflows/deploy.yml`, which builds and deploys the site to GitHub Pages automatically on every push to `main`.
 
-```ts
-base: '/your-repo-name/',
-```
+Before it will work:
+
+1. **Settings → Pages → Source**: set to **GitHub Actions**.
+2. **Settings → Secrets and variables → Actions**: add repository secrets `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` (same values as your local `.env`) — the workflow injects them at build time.
+
+`vite.config.ts` sets `base: '/british-embassy-green-commute-challenge/'` to match the GitHub Pages URL path. Update this if the repo is ever renamed.
 
 The app uses `HashRouter` so all client-side routing works without server configuration.
